@@ -37,7 +37,7 @@ router.post("/",authMiddleware,async(req,res)=>{
 
 router.get("/",authMiddleware,async(req,res)=>{
     const {status,sortBy} = req.query; 
-    let query = {}; 
+    let query = {userId:req.userId}; 
     if(status){
         query.status=status;
     }  
@@ -50,7 +50,7 @@ router.get("/",authMiddleware,async(req,res)=>{
     } 
 
     const tasks = await Task.find(query).sort(sortByoption);   
-    const tasksWithISTDeadlines = tasks.map(task => ({
+    const finalTasks = tasks.map(task => ({
       ...task.toObject(),  // Convert task to a plain JavaScript object
       deadline: new Date(task.deadline).toLocaleString('en-IN', {
           timeZone: 'Asia/Kolkata',
@@ -59,7 +59,7 @@ router.get("/",authMiddleware,async(req,res)=>{
   }));
 
     return res.json({
-        tasksWithISTDeadlines
+      finalTasks
     })
 })
 

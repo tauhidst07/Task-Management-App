@@ -41,7 +41,6 @@ router.post("/register",async(req,res)=>{
     res.json({
         msg:"user registered successfully", 
         token, 
-        user
     })
 })  
 
@@ -75,7 +74,8 @@ router.post("/login",async(req,res)=>{
         userId:user._id
     },process.env.JWT_SECRET); 
 
-    return res.json({
+    return res.json({ 
+        msg:"logged in successfully",
         token
     })
 }) 
