@@ -2,12 +2,12 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config(); 
  const authMiddleware = async(req,res,next)=>{
      
-      if(!req.headers){
+      if(!req.headers.authorization){
         return res.status(411).json({
              msg:"header is required"
         })
       } 
-     const token = req.headers.authorization.split(" ")[0];  
+     const token = req.headers.authorization.split(" ")[1];  
      try{
        const decode=jwt.verify(token,process.env.JWT_SECRET);  
        req.userId=decode.userId; 
