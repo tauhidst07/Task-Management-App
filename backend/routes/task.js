@@ -68,10 +68,18 @@ router.put("/:id",authMiddleware,async(req,res)=>{
     const dataToupdate = req.body; 
     const updatedTask = await Task.findByIdAndUpdate(id,dataToupdate,{
         new:true
-    }); 
+    });  
+
+    const finalTask = {
+      ...updatedTask.toObject(), 
+      deadline: new Date(updatedTask.deadline).toLocaleString('en-IN', {
+        timeZone: 'Asia/Kolkata',
+        hour12: true  // Use 24-hour format (set to true for 12-hour format)
+    })
+    }
 
     res.json({
-      updatedTask
+      finalTask
     })
 })  
 

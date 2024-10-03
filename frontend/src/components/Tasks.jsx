@@ -21,8 +21,10 @@ const Tasks = ({taskProps}) => {
               headers:{
                   authorization:`Bearer ${localStorage.getItem("token")}`
               } 
-            }) 
-            setTask(res.data.updatedTask);
+            })  
+            console.log(res.data.finalTask)
+            setTask(res.data.finalTask); 
+    
         }} className='bg-gray-700 py-2 px-3 w-max rounded-md  text-white'>mark as complete</button>
       </div> 
       
