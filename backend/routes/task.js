@@ -43,10 +43,10 @@ router.get("/",authMiddleware,async(req,res)=>{
     }  
     let sortByoption={}
     if(sortBy == "priority"){
-      sortByoption.priority=1;
+      sortByoption.priority=-1;
     } 
     else if(sortBy == "deadline"){
-        sortByoption.deadline=-1;
+        sortByoption.deadline=1;
     } 
 
     const tasks = await Task.find(query).sort(sortByoption);   

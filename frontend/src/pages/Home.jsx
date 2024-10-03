@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import Tasks from '../components/Tasks';
 import { useNavigate } from 'react-router-dom';
 import AddTask from '../components/AddTask';
+import Filter from '../components/filter';
 
 const Home = () => { 
     const [userTasks,setUserTasks]= useState([]); 
@@ -25,7 +26,8 @@ const Home = () => {
         } 
     }
 
-    useEffect(()=>{
+    useEffect(()=>{ 
+        console.log(`status:${status} sortBy: ${sortBy}`)
         fetchUserTasks();
     },[status,sortBy])   
 
@@ -35,20 +37,23 @@ const Home = () => {
         navigate("/login")
     }
   return (
-    <div>
-        <h1>Task to Complete </h1>  
+    <div className='flex flex-col items-center mt-3 my-4'>
+        <h1 className='text-3xl font-bold mt-4'>Tasks to Complete </h1>  
 
-        <button className='bg-black text-white py-2 px-4 rounded-md' onClick={()=>setAddTaskDisplay("fllex")}>Add new task</button> 
+        <button className='bg-gray-700 py-2 px-3 w-max rounded-md  text-white my-3' onClick={()=>setAddTaskDisplay("fllex")}>Add new task</button> 
 
          <div className={`${addTaskDisplay} my-5 `}> 
             <div>
-                <AddTask setAddTaskDisplay={setAddTaskDisplay}/>
+                <AddTask setAddTaskDisplay={setAddTaskDisplay} fetchUserTasks={fetchUserTasks}/>
             </div>
-         </div> 
-        <div className='mt-20'>
+         </div>  
+        <div className='mt-16'>
+            <Filter setStatus={setStatus} setSortBy={setSortBy}/>
+        </div>
+        <div className='mt-4'>
         {
             userTasks.length >0 && 
-            userTasks.map((task)=><Tasks key={task._id} taskProps={task}/>)
+            userTasks.map((task)=><Tasks key={task._id} taskProps={task} fetchUserTasks={fetchUserTasks} />)
         } 
         </div>
 
