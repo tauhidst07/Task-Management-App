@@ -1,11 +1,13 @@
 import axios from 'axios';
-import React from 'react'
+import React, { useContext } from 'react'
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
 
 const Login = () => { 
     const {register,handleSubmit,reset,formState:{errors}} = useForm();   
-    const navigate = useNavigate();
+    const navigate = useNavigate(); 
+    const {login} = useContext(AuthContext);
 
    async function submitHandler(data){
         console.log(data);  
@@ -16,7 +18,8 @@ const Login = () => {
                }
             }) 
             console.log(res.data); 
-            localStorage.setItem("token",res.data.token);  
+            localStorage.setItem("token",res.data.token);   
+            login(res.data.token);
             navigate("/")
             alert(res.data.msg);  
         } 

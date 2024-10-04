@@ -1,15 +1,17 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Tasks from '../components/Tasks';
 import { useNavigate } from 'react-router-dom';
 import AddTask from '../components/AddTask';
 import Filter from '../components/filter';
+import { AuthContext } from '../context/AuthContext';
 
 const Home = () => { 
     const [userTasks,setUserTasks]= useState([]); 
     const [status,setStatus] = useState(''); 
     const [sortBy,setSortBy]= useState('');   
-    const [addTaskDisplay,setAddTaskDisplay] = useState('hidden')
+    const [addTaskDisplay,setAddTaskDisplay] = useState('hidden') 
+    const {logout} = useContext(AuthContext);
      const navigate = useNavigate()
     async function fetchUserTasks(){
         try{
@@ -37,8 +39,14 @@ const Home = () => {
         navigate("/login")
     }
   return (
-    <div className='flex flex-col items-center mt-3 my-4'>
-        <h1 className='text-3xl font-bold mt-4'>Tasks to Complete </h1>  
+    <div className='flex flex-col items-center mt-3 my-4'> 
+        <h1 className='text-3xl font-bold mt-4'>Tasks to Complete </h1>   
+        <button  
+        onClick={()=>{
+           logout(); 
+           navigate("/login")
+        }}
+        >Logout</button>
 
         <button className='bg-gray-700 py-2 px-3 w-max rounded-md  text-white my-3' onClick={()=>setAddTaskDisplay("fllex")}>Add new task</button> 
 

@@ -70,7 +70,7 @@ router.post("/login",async(req,res)=>{
         })
     }  
 
-    const token = jwt.sign({
+    const token = jwt.sign({ 
         userId:user._id
     },process.env.JWT_SECRET); 
 
